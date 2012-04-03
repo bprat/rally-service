@@ -1,0 +1,10 @@
+*.class
+*.war
+*.jar
+target/**/*
+.settings
+.classpath
+.project
+src/main/resources/lib/**/*
+src/main/resources/settings.xml
+src/main/resources/config.xml
