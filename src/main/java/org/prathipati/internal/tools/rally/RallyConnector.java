@@ -12,9 +12,9 @@ import org.prathipati.internal.tools.rally.config.RallyConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.inject.Inject;
 import com.rallydev.webservice.v1_31.domain.Defect;
 import com.rallydev.webservice.v1_31.domain.DomainObject;
+import com.rallydev.webservice.v1_31.domain.OperationResult;
 import com.rallydev.webservice.v1_31.domain.Project;
 import com.rallydev.webservice.v1_31.domain.QueryResult;
 import com.rallydev.webservice.v1_31.domain.User;
@@ -24,7 +24,7 @@ import com.rallydev.webservice.v1_31.service.RallyServiceServiceLocator;
 
 public class RallyConnector {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RallyConnector.class);
-	@Inject	RallyConfig rallyConfig;
+	RallyConfig rallyConfig;
 	User currentUser;
 	private List<Defect> defects = new ArrayList<Defect>();
 	RallyService service;
@@ -40,6 +40,7 @@ public class RallyConnector {
 		} else {
 			LOGGER.info("Console unavailable .. cannot login");
 		}
+		//LOGGER.info("# defects found: " + rc.getDefectList().size());
 		for (Defect defect : rc.getDefectList()) {
 			LOGGER.info(defect.getFormattedID() + ": " + defect.getSubmittedBy().getRefObjectName() +  ": " +defect.getOwner().getRefObjectName() + ": " + defect.getName());
 		}
@@ -66,7 +67,7 @@ public class RallyConnector {
 	}
 
 	public RallyConnector() {
-		//rallyConfig = new RallyConfig();
+		rallyConfig = new RallyConfig();
 	}
 
 	public List<Defect> getDefectList() throws Exception {
@@ -96,11 +97,11 @@ public class RallyConnector {
 		StringBuffer wikiString = new StringBuffer();
 		try {
 			for (Defect defect : getDefects()) {
-				//OperationResult res = service.update(updateState(defect.getRef(), "d2q"));
+				OperationResult res = service.update(updateState(defect.getRef(), "d2q"));
 				wikiString.append(defect.getFormattedID()).append(", ");
-				/*if (res.getErrors().length > 0) {
+				if (res.getErrors().length > 0) {
 					return res.getErrors().toString();
-				}*/
+				}
 			}
 			return StringUtils.isEmpty(wikiString.toString()) ? "No defects found" :
 					"Done. (" + wikiString.substring(0, wikiString.length() - 2).toString() + ")";
@@ -120,7 +121,9 @@ public class RallyConnector {
 		defect.setRef(ref);
 		defect.setState(RallyConfig.RALLY_STATES.get(newState, "state"));
 		defect.setScheduleState(RallyConfig.RALLY_STATES.get(newState, "scheduleState"));
-		defect.setResolution(RallyConfig.RALLY_STATES.get(newState, "resolution"));
+		if(!StringUtils.isBlank(RallyConfig.RALLY_STATES.get(newState, "resolution"))) {
+			defect.setResolution(RallyConfig.RALLY_STATES.get(newState, "resolution"));
+		}
 		return defect;
 	}
 

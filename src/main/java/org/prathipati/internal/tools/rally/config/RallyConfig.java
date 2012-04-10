@@ -35,7 +35,7 @@ public class RallyConfig {
 			put("ready", "resolution", "Resolved");
 			put("d2q", "state", "Deploy to QA");
 			put("d2q", "scheduleState", "Completed");
-			put("d2q", "resolution", "Resolved");
+			//put("d2q", "resolution", "Resolved");
 		}
 	};
 	
