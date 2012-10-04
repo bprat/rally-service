@@ -30,21 +30,28 @@ public class RallyConnector {
 	RallyService service;
 
 	public static void main(String s[]) throws Exception {
-		Console console = System.console();
-		RallyConnector rc = new RallyConnector();
-		if (console != null) {
-			char[] passwdArr = console.readPassword("Enter rally password: ");
-			rc = new RallyConnector();
-			rc.initialize(passwdArr);
-			Arrays.fill(passwdArr, ' ');
-		} else {
-			LOGGER.info("Console unavailable .. cannot login");
+		try {
+			Console console = System.console();
+			RallyConnector rc = new RallyConnector();
+			if (console != null) {
+				char[] passwdArr = console.readPassword("Enter rally password: ");
+				rc = new RallyConnector();
+				rc.initialize(passwdArr);
+				Arrays.fill(passwdArr, ' ');
+			} else {
+				LOGGER.info("Console unavailable .. cannot login");
+			}
+			//LOGGER.info("# defects found: " + rc.getDefectList().size());
+			for (Defect defect : rc.getDefectList()) {
+				if(defect != null) {
+//					LOGGER.info(defect.getFormattedID() + ": " +  defect.getSubmittedBy()!=null ? defect.getSubmittedBy().getRefObjectName() : "" +  ": " +defect.getOwner()!=null ? defect.getOwner().getRefObjectName() : ""+ ": " + defect.getName());
+//					LOGGER.info(defect.getFormattedID() + ": " +  defect.getSubmittedBy().getRefObjectName() +  ": " + defect.getOwner().getRefObjectName() + ": " + defect.getName());
+				}
+			}
+			LOGGER.info(rc.updateDefects());
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		//LOGGER.info("# defects found: " + rc.getDefectList().size());
-		for (Defect defect : rc.getDefectList()) {
-			LOGGER.info(defect.getFormattedID() + ": " + defect.getSubmittedBy().getRefObjectName() +  ": " +defect.getOwner().getRefObjectName() + ": " + defect.getName());
-		}
-		LOGGER.info(rc.updateDefects());
 	}
 
 	public void initialize(char[] password) {
