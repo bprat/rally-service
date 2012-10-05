@@ -12,15 +12,15 @@ import org.prathipati.internal.tools.rally.config.RallyConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.rallydev.webservice.v1_31.domain.Defect;
-import com.rallydev.webservice.v1_31.domain.DomainObject;
-import com.rallydev.webservice.v1_31.domain.OperationResult;
-import com.rallydev.webservice.v1_31.domain.Project;
-import com.rallydev.webservice.v1_31.domain.QueryResult;
-import com.rallydev.webservice.v1_31.domain.User;
-import com.rallydev.webservice.v1_31.domain.Workspace;
-import com.rallydev.webservice.v1_31.service.RallyService;
-import com.rallydev.webservice.v1_31.service.RallyServiceServiceLocator;
+import com.rallydev.webservice.v1_37.domain.Defect;
+import com.rallydev.webservice.v1_37.domain.DomainObject;
+import com.rallydev.webservice.v1_37.domain.OperationResult;
+import com.rallydev.webservice.v1_37.domain.Project;
+import com.rallydev.webservice.v1_37.domain.QueryResult;
+import com.rallydev.webservice.v1_37.domain.User;
+import com.rallydev.webservice.v1_37.domain.Workspace;
+import com.rallydev.webservice.v1_37.service.RallyService;
+import com.rallydev.webservice.v1_37.service.RallyServiceServiceLocator;
 
 public class RallyConnector {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RallyConnector.class);
